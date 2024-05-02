@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> OSTAD JSON API Task</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #7b92aa;
+    }
+    .card {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="my-4">My Ecommerce Product Lists</h1>
+  
+  <div id="productList" class="row">
+    <!-- Product list will be filled dynamically using JavaScript -->
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Function to fetch and display products
+    function fetchProducts() {
+      $.get("https://dummyjson.com/products", function(data) {
+        // Parse JSON response
+        var products = JSON.parse(data);
+        // Display products
+        displayProducts(products);
+      });
+    }
+
+    // Function to display products
+    function displayProducts(products) {
+      var productListHTML = '';
+      products.forEach(function(product) {
+        productListHTML += `
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">${product.name}</h5>
+                <p class="card-text">${product.description}</p>
+                <p class="card-text">Price: $${product.price}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      $("#productList").html(productListHTML);
+    }
+
+    // Calling the fetchProducts function to load products on page load
+    fetchProducts();
+  });
+</script>
+</body>
+</html>
